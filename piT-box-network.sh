@@ -2,6 +2,12 @@
 #This script will help you setting a new static ip address for your device
 #Remember to chmod+x on this file to make it executable
 
+#List interfaces
+ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'
+
+#Ask for which use
+read -p "Which interface do you want to configure?" interface
+
 #Getting new configuration info from user's input
 read -p "Enter new static IP address with CIDR notation routing prefix: " ip_address
 read -p "Enter new gateway: " routers
@@ -11,7 +17,7 @@ red="\033[0;31m"
 nc="\033[0m"
 
 #Creating configuration parameters
-configuration_parameters="interface eth0
+configuration_parameters="interface ${interface}
 
 static ip_address=${ip_address}
 static routers=${routers}
@@ -30,9 +36,9 @@ config_file="/etc/dhcpcd.conf"
 
 read -p "This will override your current settings. Proceed? [Y/n] " answer
 
-case $answer in
+case ${answer} in
     [yY]|[yY])
- sudo echo "$configuration_parameters" >> "$config_file"; sudo ifdown eth0; sudo ifup eth0;
+ sudo echo "$configuration_parameters" >> "$config_file"; sudo ifdown ${interface}; sudo ifup ${interface};
  ;;
  
     [nN]|[nN])

@@ -10,10 +10,12 @@ lsblk
 read -p "\nWhich is the /dev drive? (Usually is sda1): " dev_name
 
 # Setting owner and permissions
+printf "Setting owner and permissions..."
 sudo chown -R pi:pi /mnt/${mp_name}
 sudo chmod -R 775 /mnt/${mp_name}
 
 # Setting future permissions
+printf "Setting future permissions..."
 sudo setfacl -Rdm g:pi:rwx /mnt/${mp_name}
 sudo setfacl -Rm g:pi:rwx /mnt/${mp_name}
 

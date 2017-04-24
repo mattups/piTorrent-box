@@ -32,8 +32,8 @@ uuid_line="UUID=${uuid}    /mnt/${mp_name} ntfs    nofail,uid=pi,gid=pi    0   0
 sudo echo ${uuid_line} >> /etc/fstab
 
 # Mount all and reboot
-sudo mount -a
-
-#Rebooting machine
-echo "Rebooting system in"
-for i in {5..1}; do printf "$i..\n" && sleep 1; done && sudo reboot
+if sudo mount -a; then
+    echo "Rebooting system in"
+    for i in {5..1}; do printf "$i..\n" && sleep 1; done && sudo reboot
+else
+    printf "Failed to mount, status code $?\n"

@@ -23,11 +23,11 @@ read -p "What's user you want to use for login? " rpc_username
 read -p "Password for ${rpc_username}: " rpc_password
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
-config_download_dir="“download-dir”: “${download_dir}”,"
-config_incomplete_dir="“incomplete-dir”: “${incomplete_dir}”,"
-config_rpc_password="“rpc-password”: “${rpc_password}“,"
-config_rpc_username="“rpc-username”: “${rpc_username}“,"
-config_rpc_whitelist="“rpc-whitelist”: “${rpc_whitelist}”,"
+config_download_dir="\"download-dir\": \"${download_dir}\","
+config_incomplete_dir="\"incomplete-dir\": \"${incomplete_dir}\","
+config_rpc_password="\"rpc-password\": \"${rpc_password}\","
+config_rpc_username="\"rpc-username\": \"${rpc_username}\","
+config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
 #Restart daemon
 sudo /etc/init.d/transmission-daemon start

@@ -6,10 +6,12 @@
 sudo apt-get install transmission-daemon -y
 
 #Configuring Transmission
+#TODO prompt user for choosing folder
 cd ${mount_point}
 mkdir downloads
 sudo chmod 777 downloads
 
+#Stop transmission-daemon
 sudo /etc/init.d/transmission-daemon stop
 
 #Backup actual configuration

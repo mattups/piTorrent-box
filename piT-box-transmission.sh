@@ -15,7 +15,12 @@ sudo chmod 777 downloads
 sudo /etc/init.d/transmission-daemon stop
 
 #Backup actual configuration
-sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
+if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
+then
+    printf "Backup performed successfully\n"
+else
+    printf "Failure, exit status $?\n"
+fi
 
 #Getting configuration parameters from user's input
 read -p "Where do you want to store your downloads? " download_dir 

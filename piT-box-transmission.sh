@@ -17,11 +17,11 @@ sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings
 sudo nano /etc/transmission-daemon/settings.json
 
 #TODO ask user for changes
-read -p "Where do you want to store your downloads?" download_dir 
-read -p "Where do you want to store your incomplete downloads?" incomplete_dir
-read -p "What's user you want to use for login?" rpc_username
-read -p "Password for ${rpc_username}" rpc_password
-read -p "Select your rpc-whitelist range (for example, 192.168.1.*)" rpc_whitelist
+read -p "Where do you want to store your downloads? " download_dir 
+read -p "Where do you want to store your incomplete downloads? " incomplete_dir
+read -p "What's user you want to use for login? " rpc_username
+read -p "Password for ${rpc_username}: " rpc_password
+read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 config_download_dir="“download-dir”: “${download_dir}”,"
 config_incomplete_dir="“incomplete-dir”: “${incomplete_dir}”,"

@@ -33,4 +33,6 @@ sudo echo "UUID=${uuid}    /mnt/${mp_name} ntfs    nofail,uid=pi,gid=pi    0   0
 # Mount all and reboot
 sudo mount -a
 
-# TODO show end message and reboot
+#Rebooting machine
+echo "Rebooting system in"
+for i in {5..1}; do printf "$i..\n" && sleep 1; done && sudo reboot

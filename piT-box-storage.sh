@@ -5,7 +5,9 @@ read -p "How do you want to call the mount point directory?" mp_name
 sudo mkdir -p /mnt/${mp_name}
 
 # Getting dev
-read -p "Which is the /dev drive? (Usually is sda1)" dev_name
+printf "These are your interfaces: "
+lsblk
+read -p "\nWhich is the /dev drive? (Usually is sda1): " dev_name
 
 # Setting owner and permissions
 sudo chown -R pi:pi /mnt/${mp_name}

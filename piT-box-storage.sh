@@ -24,12 +24,11 @@ sudo mount -o uid=pi,gid=pi /dev/${dev_name} /mnt/${mp_name}
 # Configuring auto mount
 sudo apt-get remove usbmount --purge
 
-# TODO this operation is still manual!
-echo "Please copy the UUID"
-sudo ls -l /dev/disk/by-uuid/ | grep ntfs
+# Getting UUID and writing config line to /etc/fstab
+uuid=$(blkid -o value -s UUID /dev/{dev_name})
 
 echo "Paste this line in /etc/fstab (sudo nano /etc/fstab)\n"
-echo "UUID=XXXXXXXX    /mnt/${mp_name} ntfs    nofail,uid=pi,gid=pi    0   0\n"
+sudo echo "UUID=${uuid}    /mnt/${mp_name} ntfs    nofail,uid=pi,gid=pi    0   0\n" >> /etc/fstab
 
 # Mount all and reboot
 sudo mount -a

@@ -2,19 +2,24 @@
 #This script will help you configuring a new storage and a network share
 #Remember to chmod+x on this file to make it executable
 
-#Installing Transmission
-sudo apt-get install transmission-daemon -y
-
 #Configuring Transmission
 #TODO prompt user for choosing folder
-cd ${mount_point}
-mkdir downloads
-sudo chmod 777 downloads
+printf "Where do you want to store you downloads?\n" 
+cd /mnt && ls -l
+read -p "Please select you drive from the list above: " drive
+printf "Set ${drive} as working directory\n"
+cd ${drive}
 
-#Stop transmission-daemon
+#Installing Transmission
+printf "Installing Transmission..."
+sudo apt-get install transmission-daemon -y
+
+#Stopping transmission-daemon
+printf "Stopping Transmission daemon to continue with configuration...\n"
 sudo /etc/init.d/transmission-daemon stop
 
 #Backup actual configuration
+printf "Performing backup of actual transmission configuration...\n"
 if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
 then
     printf "Backup performed successfully\n"
@@ -23,8 +28,22 @@ else
 fi
 
 #Getting configuration parameters from user's input
-read -p "Where do you want to store your downloads? " download_dir 
+
+read -p "Would you like to create a download folder or using an existing one? [Y/n] " answer
+
+case ${answer} in
+    [yY]|[yY])
+ read -p "Please, name the folder: " download_dir; mkdir ${download_dir}; printf "Downloads will be stored in ${drive}/${download_dir}\n"
+ ;;
+ 
+    [nN]|[nN])
+ ls -l; read -p "Where do you want to store your downloads? " download_dir 
+ ;;
+esac
+
 read -p "Where do you want to store your incomplete downloads? " incomplete_dir
+mkdir ${incomplete_dir}
+
 read -p "What's user you want to use for login? " rpc_username
 read -p "Password for ${rpc_username}: " rpc_password
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist

@@ -7,7 +7,7 @@
 printf "Where do you want to store you downloads?\n" 
 cd /mnt && ls -l
 read -p "Please select you drive from the list above: " drive
-printf "Set ${drive} as working directory\n"
+printf "Setting ${drive} as working directory\n"
 cd ${drive}
 
 #Installing Transmission
@@ -28,7 +28,6 @@ else
 fi
 
 #Getting configuration parameters from user's input
-
 read -p "Would you like to create a download folder or using an existing one? [Y/n] " answer
 
 case ${answer} in
@@ -37,15 +36,16 @@ case ${answer} in
  ;;
  
     [nN]|[nN])
- ls -l; read -p "Where do you want to store your downloads? " download_dir 
+ ls -l; read -p "Where do you want to store your downloads? Please type its name from list above: " download_dir 
  ;;
 esac
 
+#TODO use an existing folder or creating a new one for incomplete downloads
 read -p "Where do you want to store your incomplete downloads? " incomplete_dir
 mkdir ${incomplete_dir}
 
 read -p "What's user you want to use for login? " rpc_username
-read -p "Password for ${rpc_username}: " rpc_password
+read -s "Password for ${rpc_username}: " rpc_password
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 config_download_dir="\"download-dir\": \"${download_dir}\","

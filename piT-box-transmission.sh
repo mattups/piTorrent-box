@@ -4,7 +4,7 @@
 
 #Configuring Transmission
 #TODO prompt user for choosing folder
-printf "Where do you want to store you downloads?\n" 
+printf "Which drive do you want to use?\n" 
 cd /mnt && ls -l
 read -p "Please select you drive from the list above: " drive
 printf "Setting ${drive} as working directory\n"
@@ -42,7 +42,6 @@ esac
 
 #TODO use an existing folder or creating a new one for incomplete downloads
 read -p "Where do you want to store your incomplete downloads? " incomplete_dir
-mkdir ${incomplete_dir}
 
 read -p "What's user you want to use for login? " rpc_username
 read -s "Password for ${rpc_username}: " rpc_password

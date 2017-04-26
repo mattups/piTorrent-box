@@ -2,23 +2,22 @@
 #This script will help you configuring a new storage and a network share
 #Remember to chmod+x on this file to make it executable
 
-#Configuring Transmission
-#TODO prompt user for choosing folder
-printf "Which drive do you want to use?\n" 
+# Configuring Transmission
+printf "Where do you want to store your downloads?\n" 
 cd /mnt && ls -l
-read -p "Please select you drive from the list above: " drive
+read -p "Please select your drive from the list above: " drive
 printf "Setting ${drive} as working directory\n"
 cd ${drive}
 
-#Installing Transmission
+# Installing Transmission
 printf "Installing Transmission..."
 sudo apt-get install transmission-daemon -y
 
-#Stopping transmission-daemon
+# Stopping transmission-daemon
 printf "Stopping Transmission daemon to continue with configuration...\n"
 sudo /etc/init.d/transmission-daemon stop
 
-#Backup actual configuration
+# Backup actual configuration
 printf "Performing backup of actual transmission configuration...\n"
 if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
 then
@@ -27,7 +26,8 @@ else
     printf "Failure, exit status $?\n"
 fi
 
-#Getting configuration parameters from user's input
+# Getting configuration parameters from user's input
+# Download directory
 read -p "Would you like to create a download folder or using an existing one? [Y/n] " answer
 
 case ${answer} in
@@ -40,20 +40,35 @@ case ${answer} in
  ;;
 esac
 
-#TODO use an existing folder or creating a new one for incomplete downloads
-read -p "Where do you want to store your incomplete downloads? " incomplete_dir
+# Incomplete download direcory
+read -p "Would you like to create an incomplete downloads folder or using an existing one? [Y/n] " answer
 
+case ${answer} in
+    [yY]|[yY])
+ read -p "Please, name the folder: " incomplete_dir; mkdir ${incomplete_dir}; printf "Incomplete downloads will be stored in ${drive}/${incomplete_dir}\n"
+ ;;
+ 
+    [nN]|[nN])
+ ls -l; read -p "Where do you want to store your incomplete downloads? Please type its name from list above: " incomplete_dir 
+ ;;
+esac
+
+# Other parameters
 read -p "What's user you want to use for login? " rpc_username
 read -s "Password for ${rpc_username}: " rpc_password
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
+# Creating new configuration strings
 config_download_dir="\"download-dir\": \"${download_dir}\","
 config_incomplete_dir="\"incomplete-dir\": \"${incomplete_dir}\","
 config_rpc_password="\"rpc-password\": \"${rpc_password}\","
 config_rpc_username="\"rpc-username\": \"${rpc_username}\","
 config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
-#TODO Write changes to /etc/transmission-daemon/settings.json
+# TODO Write changes to /etc/transmission-daemon/settings.json
 
-#Restart daemon
+# Restarting daemon
 sudo /etc/init.d/transmission-daemon start
+
+# Final message
+printf "Done! Enjoy your piT-box!"

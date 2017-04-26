@@ -10,7 +10,7 @@ printf "Setting ${drive} as working directory\n"
 cd ${drive}
 
 # Installing Transmission
-printf "Installing Transmission..."
+printf "Installing Transmission...\n"
 sudo apt-get install transmission-daemon -y
 
 # Stopping transmission-daemon
@@ -55,7 +55,7 @@ esac
 
 # Other parameters
 read -p "What's user you want to use for login? " rpc_username
-read -p "Password for ${rpc_username}: " rpc_password
+printf "Password for ${rpc_username}: " && read -s rpc_password; printf "\n"
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 # Creating new configuration strings
@@ -75,6 +75,7 @@ sudo sed -i '/'rpc-username'/'c'\'"${config_rpc_username}" "$transmission_config
 sudo sed -i '/'rpc-whitelist'/'c'\'"${config_rpc_whitelist}" "$transmission_config_file"
 
 # Restarting daemon
+printf "Restarting Transmission...\n"
 sudo /etc/init.d/transmission-daemon start
 
 # Final message

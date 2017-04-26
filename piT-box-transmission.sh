@@ -19,7 +19,7 @@ sudo /etc/init.d/transmission-daemon stop
 
 # Backup actual configuration
 printf "Performing backup of actual transmission configuration...\n"
-if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
+if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original.test
 then
     printf "Backup performed successfully\n"
 else
@@ -55,7 +55,7 @@ esac
 
 # Other parameters
 read -p "What's user you want to use for login? " rpc_username
-read -s "Password for ${rpc_username}: " rpc_password
+read -p "Password for ${rpc_username}: " rpc_password
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 # Creating new configuration strings
@@ -66,6 +66,13 @@ config_rpc_username="\"rpc-username\": \"${rpc_username}\","
 config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
 # TODO Write changes to /etc/transmission-daemon/settings.json
+transmission_config_file="/etc/transmission-daemon/settings.json.original.test"
+
+sudo sed -i '/'download-dir'/'c'\'"${config_download_dir}" "$transmission_config_file"
+sudo sed -i '/'incomplete-dir'/'c'\'"${config_incomplete_dir}" "$transmission_config_file"
+sudo sed -i '/'rpc-password'/'c'\'"${config_rpc_password}" "$transmission_config_file"
+sudo sed -i '/'rpc-username'/'c'\'"${config_rpc_username}" "$transmission_config_file"
+sudo sed -i '/'rpc-whitelist'/'c'\'"${config_rpc_whitelist}" "$transmission_config_file"
 
 # Restarting daemon
 sudo /etc/init.d/transmission-daemon start

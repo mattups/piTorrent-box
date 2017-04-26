@@ -40,7 +40,7 @@ case ${answer} in
  ;;
 esac
 
-# Incomplete download direcory
+# Incomplete download directory
 read -p "Would you like to create an incomplete downloads folder or using an existing one? [Y/n] " answer
 
 case ${answer} in
@@ -65,7 +65,8 @@ config_rpc_password="\"rpc-password\": \"${rpc_password}\","
 config_rpc_username="\"rpc-username\": \"${rpc_username}\","
 config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
-# TODO Write changes to /etc/transmission-daemon/settings.json
+# TODO Fix double insert of incomplete_dir and rpc_whitelist
+# TODO Fix formattation of new lines
 transmission_config_file="/etc/transmission-daemon/settings.json.original.test"
 
 sudo sed -i '/'download-dir'/'c'\'"${config_download_dir}" "$transmission_config_file"
@@ -79,4 +80,4 @@ printf "Restarting Transmission...\n"
 sudo /etc/init.d/transmission-daemon start
 
 # Final message
-printf "Done! Enjoy your piT-box!"
+printf "Done! Enjoy your piT-box!\n"

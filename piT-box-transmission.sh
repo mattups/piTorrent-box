@@ -19,7 +19,7 @@ sudo /etc/init.d/transmission-daemon stop
 
 # Backup actual configuration
 printf "Performing backup of actual transmission configuration...\n"
-if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original.test
+if sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.original
 then
     printf "Backup performed successfully\n"
 else
@@ -67,7 +67,7 @@ config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
 # TODO Fix double insert of incomplete_dir and rpc_whitelist
 # TODO Fix formattation of new lines
-transmission_config_file="/etc/transmission-daemon/settings.json.original.test"
+transmission_config_file="/etc/transmission-daemon/settings.json.original"
 
 sudo sed -i '/'download-dir'/'c'\'"${config_download_dir}" "$transmission_config_file"
 sudo sed -i '/'incomplete-dir'/'c'\'"${config_incomplete_dir}" "$transmission_config_file"

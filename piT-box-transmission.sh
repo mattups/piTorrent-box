@@ -59,21 +59,21 @@ printf "Password for ${rpc_username}: " && read -s rpc_password; printf "\n"
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 # Creating new configuration strings
+# TODO Fix formattation of new lines
 config_download_dir="\"download-dir\": \"${download_dir}\","
 config_incomplete_dir="\"incomplete-dir\": \"${incomplete_dir}\","
 config_rpc_password="\"rpc-password\": \"${rpc_password}\","
 config_rpc_username="\"rpc-username\": \"${rpc_username}\","
 config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
-# TODO Fix double insert of incomplete_dir and rpc_whitelist
-# TODO Fix formattation of new lines
+# Write changes to transmission config file
 transmission_config_file="/etc/transmission-daemon/settings.json.original"
 
-sudo sed -i '/'download-dir'/'c'\'"${config_download_dir}" "$transmission_config_file"
-sudo sed -i '/'incomplete-dir'/'c'\'"${config_incomplete_dir}" "$transmission_config_file"
-sudo sed -i '/'rpc-password'/'c'\'"${config_rpc_password}" "$transmission_config_file"
-sudo sed -i '/'rpc-username'/'c'\'"${config_rpc_username}" "$transmission_config_file"
-sudo sed -i '/'rpc-whitelist'/'c'\'"${config_rpc_whitelist}" "$transmission_config_file"
+sudo sed -i '/'\"download-dir\":'/'c'\'"${config_download_dir}" "$transmission_config_file"
+sudo sed -i '/'\"incomplete-dir\":'/'c'\'"${config_incomplete_dir}" "$transmission_config_file"
+sudo sed -i '/'\"rpc-password\":'/'c'\'"${config_rpc_password}" "$transmission_config_file"
+sudo sed -i '/'\"rpc-username\":'/'c'\'"${config_rpc_username}" "$transmission_config_file"
+sudo sed -i '/'\"rpc-whitelist\":'/'c'\'"${config_rpc_whitelist}" "$transmission_config_file"
 
 # Restarting daemon
 printf "Restarting Transmission...\n"

@@ -28,7 +28,7 @@ fi
 
 # Getting configuration parameters from user's input
 # Download directory
-read -p "Would you like to create a download folder or using an existing one? [Y/n] " answer
+read -p "Would you like to create a download folder[Y] or using an existing one[N]? [Y/n] " answer
 
 case ${answer} in
     [yY]|[yY])
@@ -41,7 +41,7 @@ case ${answer} in
 esac
 
 # Incomplete download directory
-read -p "Would you like to create an incomplete downloads folder or using an existing one? [Y/n] " answer
+read -p "Would you like to create an incomplete downloads folder [Y] or using an existing one[N]? [Y/n] " answer
 
 case ${answer} in
     [yY]|[yY])
@@ -67,7 +67,7 @@ config_rpc_username="\"rpc-username\": \"${rpc_username}\","
 config_rpc_whitelist="\"rpc-whitelist\": \"${rpc_whitelist}\","
 
 # Write changes to transmission config file
-transmission_config_file="/etc/transmission-daemon/settings.json.original"
+transmission_config_file="/etc/transmission-daemon/settings.json"
 
 sudo sed -i '/'\"download-dir\":'/'c'\'"${config_download_dir}" "$transmission_config_file"
 sudo sed -i '/'\"incomplete-dir\":'/'c'\'"${config_incomplete_dir}" "$transmission_config_file"

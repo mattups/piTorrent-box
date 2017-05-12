@@ -55,7 +55,7 @@ esac
 
 # Other parameters
 read -p "What's user you want to use for login? " rpc_username
-printf "Password for ${rpc_username}: " && read -s rpc_password; printf "\n"
+printf "Type the password for ${rpc_username}: " && read -s rpc_password; printf "\n"
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 # Creating new configuration strings

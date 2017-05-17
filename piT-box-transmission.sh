@@ -59,7 +59,6 @@ printf "Type the password for ${rpc_username}: " && read -s rpc_password; printf
 read -p "Select your rpc-whitelist range (for example, 192.168.1.*): " rpc_whitelist
 
 # Creating new configuration strings
-# TODO Fix formattation of new lines
 config_download_dir="\"download-dir\": \"${download_dir}\","
 config_incomplete_dir="\"incomplete-dir\": \"${incomplete_dir}\","
 config_rpc_password="\"rpc-password\": \"${rpc_password}\","
